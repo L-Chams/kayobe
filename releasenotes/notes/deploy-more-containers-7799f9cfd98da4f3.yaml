@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    Extends the seed's "custom containers" feature to support deploying
+    containers on infrastructure VMs and overcloud hosts.

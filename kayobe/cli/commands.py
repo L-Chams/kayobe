@@ -836,10 +836,9 @@ class SeedServiceDeploy(KollaAnsibleMixin, KayobeAnsibleMixin, VaultMixin,
 
     def take_action(self, parsed_args):
         self.app.LOG.debug("Deploying seed services")
-        playbooks = _build_playbook_list(
-            "seed-manage-containers")
+        playbooks = _build_playbook_list("deploy-containers")
         extra_vars = {"kayobe_action": "deploy"}
-        self.run_kayobe_playbooks(parsed_args, playbooks,
+        self.run_kayobe_playbooks(parsed_args, playbooks, limit="seed",
                                   extra_vars=extra_vars)
         self.generate_kolla_ansible_config(parsed_args, service_config=False,
                                            bifrost_config=True)
@@ -878,9 +877,9 @@ class SeedServiceDestroy(KollaAnsibleMixin, KayobeAnsibleMixin, VaultMixin,
 
         extra_vars = {"kayobe_action": "destroy"}
         playbooks = _build_playbook_list(
-            "seed-manage-containers",
+            "deploy-containers",
             "docker-registry")
-        self.run_kayobe_playbooks(parsed_args, playbooks,
+        self.run_kayobe_playbooks(parsed_args, playbooks, limit="seed",
                                   extra_vars=extra_vars)
 
     def get_parser(self, prog_name):
@@ -911,10 +910,9 @@ class SeedServiceUpgrade(KollaAnsibleMixin, KayobeAnsibleMixin, VaultMixin,
 
     def take_action(self, parsed_args):
         self.app.LOG.debug("Upgrading seed services")
-        playbooks = _build_playbook_list(
-            "seed-manage-containers")
+        playbooks = _build_playbook_list("deploy-containers")
         extra_vars = {"kayobe_action": "deploy"}
-        self.run_kayobe_playbooks(parsed_args, playbooks,
+        self.run_kayobe_playbooks(parsed_args, playbooks, limit="seed",
                                   extra_vars=extra_vars)
         self.generate_kolla_ansible_config(parsed_args, service_config=False,
                                            bifrost_config=True)
@@ -1155,7 +1153,11 @@ class InfraVMServiceDeploy(KayobeAnsibleMixin, VaultMixin,
     """Run hooks for infra structure services."""
 
     def take_action(self, parsed_args):
-        self.app.LOG.debug("Running no-op Infra VM service deploy")
+        self.app.LOG.debug("Running Infra VM service deploy")
+        playbooks = _build_playbook_list("deploy-containers")
+        extra_vars = {"kayobe_action": "deploy"}
+        self.run_kayobe_playbooks(parsed_args, playbooks, limit="infra-vms",
+                                  extra_vars=extra_vars)
 
 
 class OvercloudInventoryDiscover(KayobeAnsibleMixin, VaultMixin, Command):
@@ -1604,6 +1606,12 @@ class OvercloudServiceDeploy(KollaAnsibleMixin, KayobeAnsibleMixin, VaultMixin,
         extra_vars = {"kayobe_action": "deploy"}
         self.run_kayobe_playbooks(parsed_args, playbooks,
                                   extra_vars=extra_vars, limit="overcloud")
+
+        # Deploy custom containers
+        playbooks = _build_playbook_list("deploy-containers")
+        extra_vars = {"kayobe_action": "deploy"}
+        self.run_kayobe_playbooks(parsed_args, playbooks, limit="overcloud",
+                                  extra_vars=extra_vars)
 
         # Post-deployment configuration.
         self.run_kolla_ansible_overcloud(parsed_args, "post-deploy")

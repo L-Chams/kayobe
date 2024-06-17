@@ -1,6 +1,9 @@
 ---
 ###############################################################################
-# Seed node docker regsitry configuration.
+# Seed node custom containers configuration.
+
+# Dict of containers to deploy.
+deploy_containers_containers: "{{ seed_containers }}"
 
 # Whether to attempt a basic authentication login to a registry when
 # deploying seed containers

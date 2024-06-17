@@ -4,6 +4,12 @@
   include_tasks: "{{ container_config.pre_destroy }}"
   when: container_config.pre_destroy is defined
 
+- name: "[{{ container_name }}] Include role for pre-destroy phase"
+  include_role: "{{ container_config.role }}"
+  vars:
+    deploy_containers_phase: "pre-destroy"
+  when: container_config.role is defined
+
 - name: "[{{ container_name }}] Delete container"
   kayobe_container:
     name: "{{ container_name }}"
@@ -13,3 +19,9 @@
 - name: "[{{ container_name }}] Include tasks file for post destroy task(s)"
   include_tasks: "{{ container_config.post_destroy }}"
   when: container_config.post_destroy is defined
+
+- name: "[{{ container_name }}] Include role for post-destroy phase"
+  include_role: "{{ container_config.role }}"
+  vars:
+    deploy_containers_phase: "post-destroy"
+  when: container_config.role is defined

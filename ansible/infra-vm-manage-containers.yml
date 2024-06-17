@@ -1,0 +1,10 @@
+---
+- name: "Ensure defined container images are {{ kayobe_action | default('deploy') }}ed on Infra VMs"
+  hosts: infra-vms
+  tags:
+    - infra-vm-deploy-containers
+    - infra-vm-manage-containers
+  vars:
+    manage_containers_action: "{{ kayobe_action | default('deploy') }}"
+  roles:
+    - role: manage-containers

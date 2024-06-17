@@ -1,14 +1,16 @@
-.. _configuration-seed-custom-containers:
+.. _configuration-custom-containers:
 
-======================
-Seed custom containers
-======================
+=================
+Custom containers
+=================
 
 This section covers configuration of the user-defined containers deployment
-functionality that runs on the seed host.
+functionality that runs on the seed, infrastructure VM and overcloud hosts.
 
 Configuration
 =============
+
+TODO: deploy_containers_containers, List variables
 
 For example, to deploy a squid container image:
 
@@ -70,7 +72,7 @@ Possible options for container deployment:
        volumes:
 
 For a detailed explanation of each option - please see `Ansible
-docker_container <https://docs.ansible.com/ansible/latest/modules/docker_container_module.html>`_
+docker_container <https://docs.ansible.com/projects/ansible/latest/collections/community/docker/docker_container_module.html>`_
 module page.
 
 List of Kayobe applied defaults to required docker_container variables:
@@ -82,22 +84,32 @@ List of Kayobe applied defaults to required docker_container variables:
 Docker registry
 ===============
 
-Seed containers can be pulled from a docker registry deployed on the seed,
+TODO: List variables
+
+Custom containers can be pulled from a docker registry deployed on the seed,
+infrastructure VM or overcloud hosts. This is possible
 since the docker registry deployment step precedes the custom container
 deployment step.
 
 It is also possible to deploy a custom containerised docker registry as a
-custom seed container. In this case, basic authentication login attempts can be
-disabled by setting
+custom seed, infrastructure VM or overcloud container. In this case, basic
+authentication login attempts can be disabled by setting
 
 .. code-block:: yaml
    :caption: ``seed.yml``
 
    seed_deploy_containers_registry_attempt_login: false
 
+   :caption: ``infra-vms.yml``
+
+   infra_vm_deploy_containers_registry_attempt_login: false
+
+   :caption: ``controllers.yml``
+
+   overcloud_deploy_containers_registry_attempt_login: false
+
 Without this setting, the login will fail because the registry has not yet been
 deployed.
 
 More information on deploying a docker registry can be found :ref:`here
 <configuration-docker-registry>`.
-

@@ -10,6 +10,12 @@
   include_tasks: "{{ container_config.pre }}"
   when: container_config.pre is defined
 
+- name: "[{{ container_name }}] Include role for pre-deploy phase"
+  include_role: "{{ container_config.role }}"
+  vars:
+    deploy_containers_phase: "pre-deploy"
+  when: container_config.role is defined
+
 - name: "[{{ container_name }}] Start container"
   kayobe_container:
     capabilities: "{{ container_config.capabilities | default(omit) }}"
@@ -37,3 +43,9 @@
 - name: "[{{ container_name }}] Include tasks file for post task(s)"
   include_tasks: "{{ container_config.post }}"
   when: container_config.post is defined
+
+- name: "[{{ container_name }}] Include role for post-deploy phase"
+  include_role: "{{ container_config.role }}"
+  vars:
+    deploy_containers_phase: "post-deploy"
+  when: container_config.role is defined

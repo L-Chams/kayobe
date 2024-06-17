@@ -13,6 +13,12 @@ deploy_containers_defaults:
   privileged: False
   restart_policy: "unless-stopped"
 
+deploy_containers_containers: []
+
 deploy_containers_docker_api_timeout: 120
 
-deploy_containers_registry_attempt_login: "{{ kolla_docker_registry_username is truthy and kolla_docker_registry_password is truthy }}"
+deploy_containers_registry:
+deploy_containers_registry_username:
+deploy_containers_registry_password:
+
+deploy_containers_registry_attempt_login: "{{ deploy_containers_registry_username is truthy and deploy_containers_registry_password is truthy }}"

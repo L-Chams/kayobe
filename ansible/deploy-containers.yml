@@ -1,0 +1,14 @@
+---
+- name: Ensure containers are deployed
+  hosts: seed:overcloud:infra-vms
+  tags:
+    # Kept for backward compatibility.
+    - seed-deploy-containers
+    - deploy-containers
+  tasks:
+    - import_role:
+        name: manage-containers
+      vars:
+        deploy_containers_registry: "{{ kolla_docker_registry }}"
+        deploy_containers_registry_username: "{{ kolla_docker_registry_username }}"
+        deploy_containers_registry_password: "{{ kolla_docker_registry_password }}"

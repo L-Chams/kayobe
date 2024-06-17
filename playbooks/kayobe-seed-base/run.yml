@@ -10,6 +10,11 @@
         cmd: "{{ kayobe_src_dir }}/dev/seed-deploy.sh &> {{ logs_dir }}/ansible/seed-deploy"
         executable: /bin/bash
 
+    - name: Check that hello-world custom container was deployed
+      shell:
+        cmd: "sudo docker ps -a | grep hello-world"
+        executable: /bin/bash
+
     - block:
         # NOTE(mgoddard): The stack user cannot read the kolla source code, which
         # lives in the zuul user's home directory. Copy it to a readable location.

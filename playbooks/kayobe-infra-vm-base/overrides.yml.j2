@@ -53,3 +53,8 @@ infra_vm_provision_timeout: 600
 # are using for SSH to be removed. Use a dummy interface.
 aio_bridge_ports:
   - dummy1
+
+# Deploy a hello-world container.
+infra_vm_containers:
+  hello-world:
+    image: docker.io/library/hello-world:latest

@@ -1,0 +1,10 @@
+---
+###############################################################################
+# Infrastructure VM node custom containers configuration.
+
+# Dict of containers to deploy.
+deploy_containers_containers: "{{ infra_vm_containers }}"
+
+# Whether to attempt a basic authentication login to a registry when
+# deploying infrastructure VM containers
+deploy_containers_registry_attempt_login: "{{ infra_vm_deploy_containers_registry_attempt_login }}"

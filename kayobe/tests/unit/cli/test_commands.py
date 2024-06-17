@@ -916,7 +916,8 @@ class TestCase(unittest.TestCase):
         expected_calls = [
             mock.call(
                 mock.ANY,
-                [utils.get_data_files_path("ansible", "seed-manage-containers.yml")],  # noqa
+                [utils.get_data_files_path("ansible", "deploy-containers.yml")],  # noqa
+                limit="seed",
                 extra_vars={'kayobe_action': 'deploy'}
             ),
             mock.call(
@@ -970,7 +971,8 @@ class TestCase(unittest.TestCase):
         expected_calls = [
             mock.call(
                 mock.ANY,
-                [utils.get_data_files_path("ansible", "seed-manage-containers.yml")],  # noqa
+                [utils.get_data_files_path("ansible", "deploy-containers.yml")],  # noqa
+                limit="seed",
                 extra_vars={'kayobe_action': 'deploy'}
             ),
             mock.call(
@@ -1204,7 +1206,15 @@ class TestCase(unittest.TestCase):
         result = command.run(parsed_args)
         self.assertEqual(0, result)
 
-        expected_calls = []
+        expected_calls = [
+            mock.call(
+                mock.ANY,
+                [utils.get_data_files_path(
+                    "ansible", "deploy-containers.yml")],
+                limit="infra=vms",
+                extra_vars={'kayobe_action': 'deploy'}
+            ),
+        ]
         self.assertListEqual(expected_calls, mock_run.call_args_list)
 
     @mock.patch.object(commands.KayobeAnsibleMixin,

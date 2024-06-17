@@ -1,0 +1,10 @@
+---
+###############################################################################
+# Controller node custom containers configuration.
+
+# Dict of containers to deploy.
+deploy_containers_containers: "{{ controller_containers }}"
+
+# Whether to attempt a basic authentication login to a registry when
+# deploying controller node containers
+deploy_containers_registry_attempt_login: "{{ overcloud_deploy_containers_registry_attempt_login }}"

@@ -15,3 +15,8 @@
       shell:
         cmd: "{{ kayobe_src_dir }}/dev/infra-vm-deploy.sh &> {{ logs_dir }}/ansible/infra-vm-deploy"
         executable: /bin/bash
+
+    - name: Check that hello-world custom container was deployed
+      shell:
+        cmd: "sudo docker ps -a | grep hello-world"
+        executable: /bin/bash

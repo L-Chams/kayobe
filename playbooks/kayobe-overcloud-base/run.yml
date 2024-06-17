@@ -12,6 +12,11 @@
         cmd: "{{ kayobe_src_dir }}/dev/overcloud-deploy.sh &> {{ logs_dir }}/ansible/overcloud-deploy"
         executable: /bin/bash
 
+    - name: Check that hello-world custom container was deployed
+      shell:
+        cmd: "sudo docker ps -a | grep hello-world"
+        executable: /bin/bash
+
     # Check that passwords are Vault encrypted.
     - name: View passwords.yml using Ansible Vault
       vars:
